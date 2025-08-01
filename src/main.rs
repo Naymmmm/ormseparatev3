@@ -39,7 +39,7 @@ impl Default for Config {
         // Default ORM profile
         let default_profile = Profile {
             name: "orm".to_string(),
-            file_regex: r".*orm.*".to_string(),
+            file_regex: "/orm/i".to_string(),  // New format: /pattern/args
             output_format: "png".to_string(),
             channels: vec![
                 ChannelConfig { name: "Occlusion".to_string(), channel: 0 },
@@ -147,6 +147,27 @@ fn wait_for_keypress() -> Result<()> {
     io::stdin().read(&mut buffer).context("Failed to read user input")?;
     
     Ok(())
+}
+
+// Parse regex in /pattern/args format
+fn parse_regex_format(regex_str: &str) -> Result<(&str, &str)> {
+    // Check if the string follows the /pattern/args format
+    if regex_str.starts_with('/') {
+        // Find the position of the second slash
+        if let Some(second_slash_pos) = regex_str[1..].find('/') {
+            // +1 because we're searching in the substring starting at index 1
+            let second_slash_pos = second_slash_pos + 1;
+            
+            // Extract pattern and flags
+            let pattern = &regex_str[1..second_slash_pos];
+            let flags = &regex_str[second_slash_pos + 1..];
+            
+            return Ok((pattern, flags));
+        }
+    }
+    
+    // If the string doesn't follow the /pattern/args format, treat it as a regular regex pattern
+    Ok((regex_str, ""))
 }
 
 // Prompt user to select a profile when multiple profiles exist
@@ -274,8 +295,15 @@ fn process_input(input: &Path, profile: &Profile) -> Result<()> {
 fn process_directory(dir: &Path, profile: &Profile) -> Result<()> {
     println!("Processing directory: {}", dir.display());
     
-    let regex = Regex::new(&profile.file_regex)
-        .with_context(|| format!("Invalid regex pattern: {}", profile.file_regex))?;
+    // Parse regex in /pattern/args format
+    let (pattern, flags) = parse_regex_format(&profile.file_regex)?;
+    
+    // Create regex with appropriate options
+    let regex = if flags.contains('i') {
+        Regex::new(&format!("(?i){}", pattern))
+    } else {
+        Regex::new(pattern)
+    }.with_context(|| format!("Invalid regex pattern: {}", profile.file_regex))?;
     
     let files: Vec<_> = WalkDir::new(dir)
         .into_iter()
