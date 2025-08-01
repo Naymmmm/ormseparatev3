@@ -5,6 +5,7 @@ edition = "2024"
 authors = ["darwin <me@naymmm.lol>"]
 repository = "https://github.com/Naymmmm/ormseparatev3"
 license = "MIT"
+description = "A simple RGB separator"
 
 [package.metadata.winres]
 CompanyName = "naymmm.lol"
