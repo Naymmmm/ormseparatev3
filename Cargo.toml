@@ -1,0 +1,14 @@
+[package]
+name = "ormseparatev3"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+image = "0.24.7"
+regex = "1.10.2"
+serde = { version = "1.0.193", features = ["derive"] }
+toml = "0.8.8"
+rayon = "1.8.0"
+walkdir = "2.4.0"
+clap = { version = "4.4.11", features = ["derive"] }
+anyhow = "1.0.75"
