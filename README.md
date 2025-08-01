@@ -10,6 +10,13 @@ Cargo is used for installation. You can either run
 $ cargo install ormseparatev3
 ```
 or download directly from releases (recommended)
+
+## Usage
+Basic usage can be accomplished by dragging a folder or image onto the executable. You can use it in the command line by adding the folder or image as an argument. E.g.
+```sh
+$ ormseparatev3 file.png
+```
+
 ## Configuration
 
 By default, after running the binary; it will create a config file (toml) if it doesn't already exist in the binary location. The configuration is simple.
