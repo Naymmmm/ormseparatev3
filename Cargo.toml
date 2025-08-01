@@ -3,6 +3,7 @@ name = "ormseparatev3"
 version = "0.1.0"
 edition = "2024"
 authors = ["darwin <me@naymmm.lol>"]
+repository = "https://github.com/Naymmmm/ormseparatev3"
 
 [package.metadata.winres]
 CompanyName = "naymmm.lol"
@@ -18,6 +19,9 @@ rayon = "1.8.0"
 walkdir = "2.4.0"
 clap = { version = "4.4.11", features = ["derive"] }
 anyhow = "1.0.75"
+
+[build-dependencies]
+winres = "0.1.12"
 
 [[bin]]
 name = "ormseparatev3"
