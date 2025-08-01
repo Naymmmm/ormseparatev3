@@ -2,6 +2,12 @@
 name = "ormseparatev3"
 version = "0.1.0"
 edition = "2024"
+authors = ["darwin <me@naymmm.lol>"]
+
+[package.metadata.winres]
+CompanyName = "naymmm.lol"
+FileDescription = "ORM Separator V3"
+OriginalFilename = "ormseparatev3.exe"
 
 [dependencies]
 image = "0.24.7"
